@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gamma Beta Alumni Association</title>
+    <meta name="description" content="A charter argued for over seven years. A hundred and thirteen years of men who signed the same book. The record is coming.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            /* min-height, not height: a fixed height clamps the document to the
+               viewport, so anything taller is clipped and the page cannot
+               scroll. That cut the foot off the engraving on short windows. */
+            min-height: 100%;
+            width: 100%;
+            background-color: #0b1524;
+            color: #f4f1ea;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Container and layout */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            justify-content: safe center;
+            position: relative;
+            min-height: 100vh;
+            padding: 1.6rem 1.5rem 2rem;
+        }
+
+        /* Image container - background */
+        .image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .image-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: sepia(0.3) saturate(0.62) contrast(1.12) brightness(0.95);
+        }
+
+        /* Vignette effect */
+        .image-frame::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(11, 21, 36, 0.38) 100%);
+            pointer-events: none;
+        }
+
+        /* Image animations - staggered crossfade */
+        /* Nine photographs, in order, one rotation. Each frame runs the same
+           keyframe and is offset by a negative delay, so the whole sequence is
+           described once. */
+        @keyframes cycle {
+            0%            { opacity: 0; }
+            2.00%      { opacity: 1; }
+            11.11%      { opacity: 1; }
+            13.11%      { opacity: 0; }
+            100%          { opacity: 0; }
+        }
+        .image-frame img {
+            animation: cycle 54s linear infinite;
+        }
+        .image-frame:nth-child(1) img { animation-delay: -0.00s; }
+        .image-frame:nth-child(2) img { animation-delay: -48.00s; }
+        .image-frame:nth-child(3) img { animation-delay: -42.00s; }
+        .image-frame:nth-child(4) img { animation-delay: -36.00s; }
+        .image-frame:nth-child(5) img { animation-delay: -30.00s; }
+        .image-frame:nth-child(6) img { animation-delay: -24.00s; }
+        .image-frame:nth-child(7) img { animation-delay: -18.00s; }
+        .image-frame:nth-child(8) img { animation-delay: -12.00s; }
+        .image-frame:nth-child(9) img { animation-delay: -6.00s; }
+
+        /* Respect prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            .image-frame img { animation: none; opacity: 0; }
+            .image-frame:nth-child(1) img { opacity: 1; }
+        }
+
+        /* Content wrapper */
+        .content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            text-align: center;
+            margin: auto;
+        }
+
+        /* Greek letters */
+        .greek-letters {
+            font-size: 1.1rem;
+            letter-spacing: 0.3em;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        /* Headline */
+        .headline {
+            font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+            font-size: clamp(1.8rem, 6vw, 3.2rem);
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .headline strong {
+            display: block;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Body text */
+        .body-text {
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            line-height: 1.8;
+            opacity: 0.95;
+            margin-bottom: 4rem;
+            font-weight: 400;
+            letter-spacing: 0;
+        }
+
+        /* Accent color highlights */
+        .accent {
+            color: #c4697f;
+        }
+
+        /* Footer */
+        .footer {
+            position: relative;
+            z-index: 2;
+            font-size: 0.85rem;
+            opacity: 0.6;
+            letter-spacing: 0.15em;
+            margin-top: 3rem;
+            font-weight: 300;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+
+            .greek-letters {
+                margin-bottom: 2rem;
+                font-size: 1rem;
+            }
+
+            .headline {
+                margin-bottom: 1.5rem;
+            }
+
+            .body-text {
+                margin-bottom: 3rem;
+            }
+
+            .footer {
+                margin-top: 2rem;
+            }
+        }
+
+        /* Additional spacing for large screens */
+        @media (min-width: 1024px) {
+            body {
+                padding: 3rem 2rem;
+            }
+
+            .content {
+                max-width: 800px;
+            }
+        }
+
+        /* The Bridge Builder engraving. Already sepia and on aged paper, so it
+           takes almost no filtering — just enough to sit in the dark. */
+        .bridge {
+            margin: 2rem auto 0;
+            max-width: min(460px, 80vw);
+            opacity: 0;
+            animation: bridgeIn 2.4s ease 1.2s forwards;
+        }
+        .bridge img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: brightness(0.92) contrast(1.03);
+            border-radius: 2px;
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+        }
+        @keyframes bridgeIn { to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+            .bridge { opacity: 1; animation: none; }
+        }
+        @media (max-width: 34rem) {
+            .bridge { margin-top: 2.5rem; max-width: 88vw; }
+        }
+
+        /* The existing vignette darkens the edges, but the text sits in the
+           middle, where the photograph is brightest. This lays a soft pool of
+           dark under the words so they stay readable over any of the four. */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 70% 55% at 50% 42%,
+                    rgba(11, 21, 36, 0.52) 0%,
+                    rgba(11, 21, 36, 0.32) 45%,
+                    rgba(11, 21, 36, 0.10) 100%);
+        }
+
+        /* The dragon and shield, lifted from the gold-stamped cover of the 1907
+           Hand-Book of Beta Theta Pi. The gold was separated from the red cloth
+           on the green channel and recoloured, so it sits on the navy without a
+           background block behind it. */
+        .crest {
+            display: block;
+            width: auto;
+            height: clamp(96px, 15vw, 158px);
+            margin: 0 auto 1.1rem;
+            opacity: 0;
+            animation: crestIn 2.6s ease 0.3s forwards;
+        }
+        @keyframes crestIn { to { opacity: 0.92; } }
+        @media (prefers-reduced-motion: reduce) {
+            .crest { opacity: 0.92; animation: none; }
+        }
+
+        /* The chapter's own valediction, in a script face. No web font is
+           loaded — this is a stack of faces already present on Mac, Windows and
+           common Linux, falling back to whatever cursive the device has. */
+        .valediction {
+            margin: 1.5rem 0 0;
+            font-family: "Snell Roundhand", "Apple Chancery", "Segoe Script",
+                         "Brush Script MT", "Lucida Handwriting", cursive;
+            font-size: clamp(1.45rem, 4.4vw, 2rem);
+            line-height: 1.5;
+            color: rgba(244, 241, 234, 0.82);
+            letter-spacing: 0.01em;
+        }
+        .valediction em { font-style: italic; }
+
+        /* "Arrived in Utah in 1913" is the longest line on the page and wraps
+           on the narrowest phones. Ease the size there so each date keeps its
+           own line. */
+        @media (max-width: 22.5rem) {
+            .headline strong { font-size: 1.5rem; }
+        }
+
+        /* The nine plates are not equally bright. The 1913-to-1960s ones are
+           dark and need all the light they can get; the modern colour
+           photographs are bright enough to swallow the text. Graduate the
+           exposure by era rather than fighting it with one global scrim. */
+        .image-frame:nth-child(4) img,
+        .image-frame:nth-child(5) img,
+        .image-frame:nth-child(6) img { filter: sepia(0.3) saturate(0.6) contrast(1.1) brightness(0.78); }
+        .image-frame:nth-child(7) img,
+        .image-frame:nth-child(8) img,
+        .image-frame:nth-child(9) img { filter: sepia(0.28) saturate(0.55) contrast(1.06) brightness(0.55); }
+
+        /* And give the words their own shadow, so they hold up over whichever
+           plate happens to be showing. */
+        .headline, .valediction { text-shadow: 0 2px 14px rgba(6, 12, 22, 0.85), 0 1px 3px rgba(6, 12, 22, 0.7); }
+        .footer { text-shadow: 0 1px 8px rgba(6, 12, 22, 0.8); }
+    </style>
+</head>
+<body>
+    <!-- Image carousel background -->
+    <div class="image-container">
+        <div class="image-frame">
+            <img src="img/01-banquet.jpg" alt="The installation banquet at the Hotel Utah, 1913">
+        </div>
+        <div class="image-frame">
+            <img src="img/02-lecompte.jpg" alt="The LeCompte house with the Greek letters on its face">
+        </div>
+        <div class="image-frame">
+            <img src="img/03-chapter-bw.jpg" alt="The chapter assembled, mid-century">
+        </div>
+        <div class="image-frame">
+            <img src="img/04-homesite.jpg" alt="Members at a new homesite in the 1970s">
+        </div>
+        <div class="image-frame">
+            <img src="img/05-chapter-70s.jpg" alt="The chapter outside the house in the 1970s">
+        </div>
+        <div class="image-frame">
+            <img src="img/06-chapter-80s.jpg" alt="The chapter in the late 1980s">
+        </div>
+        <div class="image-frame">
+            <img src="img/07-excavation.jpg" alt="The house held on supports while a chapter room was dug beneath it">
+        </div>
+        <div class="image-frame">
+            <img src="img/08-ribbon.jpg" alt="The ribbon cut at 70 South Wolcott, 2012">
+        </div>
+        <div class="image-frame">
+            <img src="img/09-house-today.jpg" alt="The restored chapter home today">
+        </div>
+</div>
+
+    <!-- Main content -->
+    <div class="content">
+        <!-- Greek letters -->
+        <img class="crest" src="img/dragon.png" width="331" height="520"
+             alt="The Beta Theta Pi coat of arms: a winged dragon gripping a shield of three stars over a wreath, above fasces bearing the date 1839.">
+
+        <!-- Headline -->
+        <div class="headline">
+            <strong>Founded in 1839</strong>
+            <strong>Arrived in Utah in 1913</strong>
+
+            <p style="font-size: clamp(0.95rem, 2.5vw, 1.1rem); margin-top: 2rem; line-height: 1.8;">
+                A charter argued for over seven years. A house lost, and taken back. A hundred and thirteen years of men who signed the same book.
+            </p>
+
+            <p style="margin-top: 1.75rem; color: #c4697f; font-size: clamp(1rem, 2.6vw, 1.2rem); letter-spacing: 0.02em;">The record of it returns soon…</p>
+
+            <p class="valediction">Yours in &mdash;<em>kai</em>&mdash;</p>
+
+            <figure class="bridge">
+                <img src="img/bridge.jpg" width="1067" height="551" loading="lazy" alt="An engraving of an old man building a stone bridge across a chasm, a young traveller behind him, the words I am building this bridge for him beneath.">
+            </figure>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        Gamma Beta Alumni Association · Beta Theta Pi · University of Utah
+    </div>
+</body>
+</html>
