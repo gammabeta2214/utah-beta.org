@@ -102,9 +102,24 @@
             border-bottom-color: rgba(244, 241, 234, 0.7);
         }
 
+        /* Phones. The copy grew, so the picture gives ground rather than the
+           words: it caps by viewport height, not width, so a short screen
+           shrinks it instead of pushing the sentence off the bottom. */
         @media (max-width: 600px) {
-            body { padding: 2rem 1.25rem 2.5rem; }
-            .plate { margin-bottom: 1.75rem; }
+            body { padding: 1.5rem 1.25rem 2rem; }
+            .code { margin-bottom: 1.25rem; font-size: 0.68rem; letter-spacing: 0.24em; }
+            .plate { margin-bottom: 1.35rem; }
+            .plate img { max-height: 30vh; object-fit: contain; }
+            .plate figcaption { margin-top: 0.6rem; font-size: 0.72rem; }
+            .headline { margin-bottom: 1.1rem; }
+            .body p { margin-bottom: 0.85rem; }
+            .home { margin-top: 1.75rem; }
+        }
+
+        /* Short phones in landscape, and small screens generally: stop the
+           picture eating the page. */
+        @media (max-height: 620px) {
+            .plate img { max-height: 26vh; object-fit: contain; }
         }
     </style>
 </head>
@@ -118,16 +133,16 @@
                 <img src="img/swan.jpg" width="1024" height="559"
                      alt="Two daguerreotype plates side by side on a wooden table, both showing the same young man in a dark coat and knotted cravat. The second is framed and labelled in script: G. A. Swan, 1839.">
             </picture>
-            <figcaption>G. A. Swan &middot; 1839</figcaption>
+            <figcaption>George A. Swan</figcaption>
         </figure>
 
         <h1 class="headline">This page has gone the way of Grimke Swan.</h1>
 
         <div class="body">
-            <p>Whatever you were looking for, Swan took it with him in 1839. The
-            rituals went too, along with a fair number he appears to have invented
-            on the spot, and in a hundred and eighty-seven years not one of them
-            has turned up.</p>
+            <p>Whatever you were looking for, Swan took it with him in 1840, along
+            with the fake rituals and secrets the founders gave him. Over a hundred
+            and eighty-six years later, the fate of this insufferable bore and his
+            &ldquo;initiation&rdquo; remains a mystery.</p>
 
             <p class="beat">Some things stay lost. This will almost certainly be
             one of them.</p>
