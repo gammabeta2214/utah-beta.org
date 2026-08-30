@@ -140,8 +140,9 @@
 
         <div class="body">
             <p>Whatever you were looking for, Swan took it with him in 1840, along
-            with the fake rituals and secrets the founders gave him. Over a hundred
-            and eighty-six years later, the fate of this insufferable bore and his
+            with the fake rituals and secrets the founders gave him. Over
+            <span data-years-since="1840">a hundred and eighty-six</span> years
+            later, the fate of this insufferable bore and his
             &ldquo;initiation&rdquo; remains a mystery.</p>
 
             <p class="beat">Some things stay lost. This will almost certainly be
@@ -150,5 +151,48 @@
 
         <a class="home" href="/">Back to the front</a>
     </main>
+
+    <script>
+    /* Counts the years since a date and writes the number out in words, so the
+       sentence stays accurate without anyone editing it each January.
+
+       Any element with data-years-since="YYYY" gets its text replaced. The
+       HTML already contains the correct words for right now, so if this script
+       never runs — no JavaScript, an old browser, a syntax error — the
+       sentence still reads properly and simply ages the way it did before.
+
+       "a hundred", not "one hundred": the front page says "A hundred and
+       thirteen years of men", and this should sound like the same writer. */
+    (function () {
+        var ONES = ["", "one", "two", "three", "four", "five", "six", "seven",
+                    "eight", "nine", "ten", "eleven", "twelve", "thirteen",
+                    "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
+                    "nineteen"];
+        var TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty",
+                    "seventy", "eighty", "ninety"];
+
+        function words(n) {
+            if (n < 20) { return ONES[n]; }
+            if (n < 100) {
+                var ten = TENS[Math.floor(n / 10)], one = ONES[n % 10];
+                return one ? ten + "-" + one : ten;
+            }
+            var hundreds = Math.floor(n / 100), rest = n % 100;
+            var head = hundreds === 1 ? "a hundred" : ONES[hundreds] + " hundred";
+            return rest ? head + " and " + words(rest) : head;
+        }
+
+        var nodes = document.querySelectorAll("[data-years-since]");
+        for (var i = 0; i < nodes.length; i++) {
+            var from = parseInt(nodes[i].getAttribute("data-years-since"), 10);
+            var n = new Date().getFullYear() - from;
+            /* A device with a badly wrong clock should not rewrite the sentence
+               into nonsense. Outside a plausible span the written text stands. */
+            if (from && n >= 150 && n <= 400) {
+                nodes[i].textContent = words(n);
+            }
+        }
+    })();
+    </script>
 </body>
 </html>
